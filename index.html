@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fake Claude API - Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <h1 class="logo">Fake Claude API</h1>
+      <span class="badge" id="status-badge">Checking...</span>
+    </div>
+    <div class="header-right">
+      <span class="endpoint" id="endpoint-url">http://localhost:4321</span>
+    </div>
+  </header>
+  <main class="layout">
+    <aside class="sidebar">
+      <section class="panel" id="config-panel">
+        <h2 class="panel-title">Configuration</h2>
+        <div class="form-group">
+          <label for="model-select">Model</label>
+          <select id="model-select">
+            <option value="claude-sonnet-4-20250514">claude-sonnet-4-20250514</option>
+            <option value="claude-opus-4-20250514">claude-opus-4-20250514</option>
+            <option value="claude-haiku-4-20250514">claude-haiku-4-20250514</option>
+            <option value="sonnet">sonnet (alias)</option>
+            <option value="opus">opus (alias)</option>
+            <option value="haiku">haiku (alias)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="max-tokens">Max Tokens</label>
+          <input type="number" id="max-tokens" value="1024" min="1" max="8192">
+        </div>
+        <div class="form-group">
+          <label for="system-prompt">System Prompt</label>
+          <textarea id="system-prompt" rows="3" placeholder="Optional system prompt..."></textarea>
+        </div>
+        <div class="form-row">
+          <label class="toggle-label">
+            <input type="checkbox" id="stream-toggle">
+            <span class="toggle-switch"></span>
+            Streaming
+          </label>
+          <label class="toggle-label">
+            <input type="checkbox" id="tools-toggle">
+            <span class="toggle-switch"></span>
+            Tools
+          </label>
+        </div>
+        <div class="form-group hidden" id="tools-config">
+          <label for="tools-json">Tool Definitions (JSON)</label>
+          <textarea id="tools-json" rows="6" spellcheck="false">[
+  {
+    "name": "get_weather",
+    "description": "Get weather for a city",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "city": { "type": "string", "description": "City name" }
+      },
+      "required": ["city"]
+    }
+  }
+]</textarea>
+        </div>
+      </section>
+      <section class="panel" id="examples-panel">
+        <h2 class="panel-title">Quick Examples</h2>
+        <div class="examples-list">
+          <button class="example-btn" data-example="hello"><span class="example-icon">wave</span><span>Hello World</span></button>
+          <button class="example-btn" data-example="code"><span class="example-icon">code</span><span>Write Code</span></button>
+          <button class="example-btn" data-example="tool"><span class="example-icon">tool</span><span>Tool Use</span></button>
+          <button class="example-btn" data-example="multi-turn"><span class="example-icon">chat</span><span>Multi-turn</span></button>
+          <button class="example-btn" data-example="streaming"><span class="example-icon">stream</span><span>Streaming</span></button>
+          <button class="example-btn" data-example="count-tokens"><span class="example-icon">count</span><span>Count Tokens</span></button>
+        </div>
+      </section>
+    </aside>
+    <div class="main-content">
+      <section class="panel" id="api-panel">
+        <h2 class="panel-title">API Request</h2>
+        <div class="form-group">
+          <label for="user-message">Message</label>
+          <textarea id="user-message" rows="4" placeholder="Type your message here...">Hello! How are you?</textarea>
+        </div>
+        <div class="button-row">
+          <button class="btn btn-primary" id="send-btn">Send Request</button>
+          <button class="btn btn-secondary" id="clear-btn">Clear</button>
+          <button class="btn btn-secondary" id="view-raw-btn">View Raw JSON</button>
+        </div>
+      </section>
+      <section class="panel" id="response-panel">
+        <div class="panel-title-row">
+          <h2 class="panel-title">Response</h2>
+          <div class="response-meta" id="response-meta"></div>
+        </div>
+        <div id="response-area" class="response-area">
+          <p class="placeholder-text">Send a request to see the response here.</p>
+        </div>
+      </section>
+      <div class="modal-overlay hidden" id="raw-modal">
+        <div class="modal">
+          <div class="modal-header">
+            <h3>Raw Request JSON</h3>
+            <button class="modal-close" id="modal-close">&times;</button>
+          </div>
+          <pre class="modal-body" id="raw-json-display"></pre>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" id="copy-raw-btn">Copy to Clipboard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="sidebar sidebar-right">
+      <section class="panel" id="monitor-panel">
+        <div class="panel-title-row">
+          <h2 class="panel-title">Request Monitor</h2>
+          <button class="btn-icon" id="clear-monitor" title="Clear monitor">clear</button>
+        </div>
+        <div id="monitor-list" class="monitor-list">
+          <p class="placeholder-text">No requests yet.</p>
+        </div>
+      </section>
+    </aside>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
