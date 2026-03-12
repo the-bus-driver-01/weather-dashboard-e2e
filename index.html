@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Weather Dashboard - Get current weather and 5-day forecast for any city">
+    <title>Weather Dashboard</title>
+</head>
+<body>
+    <!-- Header Section with Page Title and Branding -->
+    <header class="site-header">
+        <h1 class="site-title">Weather Dashboard</h1>
+        <p class="site-subtitle">Your Local Weather Information Hub</p>
+    </header>
+
+    <!-- Main Content Area Wrapper -->
+    <main class="main-content">
+        <!-- Weather Search Form Section -->
+        <section id="search-section" class="search-section">
+            <h2 class="section-title">Search Weather</h2>
+            <form id="search-form" class="weather-search-form">
+                <div class="form-group">
+                    <label for="city-input" class="visually-hidden">Enter city name</label>
+                    <input
+                        type="text"
+                        id="city-input"
+                        class="city-input"
+                        placeholder="Enter city name..."
+                        required
+                        autocomplete="off"
+                    >
+                </div>
+                <button type="submit" id="search-btn" class="search-btn">
+                    Get Weather
+                </button>
+            </form>
+        </section>
+
+        <!-- Current Weather Display Section -->
+        <section id="current-weather" class="current-weather-section">
+            <h2 class="section-title">Current Weather</h2>
+            <article id="current-weather-display" class="current-weather-card">
+                <div class="weather-location">
+                    <h3 id="current-location" class="location-name">Select a city to view weather</h3>
+                </div>
+                <div class="weather-main">
+                    <div class="temperature-container">
+                        <span id="current-temp" class="current-temperature">--°</span>
+                        <div class="weather-icon-container">
+                            <img id="current-icon" class="weather-icon" src="" alt="Weather icon" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="weather-details">
+                        <p id="current-description" class="weather-description">--</p>
+                        <div class="weather-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Feels like:</span>
+                                <span id="feels-like" class="stat-value">--°</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Humidity:</span>
+                                <span id="humidity" class="stat-value">--%</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Wind:</span>
+                                <span id="wind-speed" class="stat-value">-- mph</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- 5-Day Forecast Section -->
+        <section id="forecast-section" class="forecast-section">
+            <h2 class="section-title">5-Day Forecast</h2>
+            <div id="forecast-container" class="forecast-container">
+                <!-- Day 1 Forecast -->
+                <article class="forecast-card" data-day="1">
+                    <header class="forecast-header">
+                        <h3 class="forecast-date">Day 1</h3>
+                    </header>
+                    <div class="forecast-content">
+                        <div class="forecast-icon-container">
+                            <img class="forecast-icon" src="" alt="Weather forecast icon" style="display: none;">
+                        </div>
+                        <div class="forecast-temps">
+                            <span class="temp-high">--°</span>
+                            <span class="temp-divider">/</span>
+                            <span class="temp-low">--°</span>
+                        </div>
+                        <p class="forecast-description">--</p>
+                    </div>
+                </article>
+
+                <!-- Day 2 Forecast -->
+                <article class="forecast-card" data-day="2">
+                    <header class="forecast-header">
+                        <h3 class="forecast-date">Day 2</h3>
+                    </header>
+                    <div class="forecast-content">
+                        <div class="forecast-icon-container">
+                            <img class="forecast-icon" src="" alt="Weather forecast icon" style="display: none;">
+                        </div>
+                        <div class="forecast-temps">
+                            <span class="temp-high">--°</span>
+                            <span class="temp-divider">/</span>
+                            <span class="temp-low">--°</span>
+                        </div>
+                        <p class="forecast-description">--</p>
+                    </div>
+                </article>
+
+                <!-- Day 3 Forecast -->
+                <article class="forecast-card" data-day="3">
+                    <header class="forecast-header">
+                        <h3 class="forecast-date">Day 3</h3>
+                    </header>
+                    <div class="forecast-content">
+                        <div class="forecast-icon-container">
+                            <img class="forecast-icon" src="" alt="Weather forecast icon" style="display: none;">
+                        </div>
+                        <div class="forecast-temps">
+                            <span class="temp-high">--°</span>
+                            <span class="temp-divider">/</span>
+                            <span class="temp-low">--°</span>
+                        </div>
+                        <p class="forecast-description">--</p>
+                    </div>
+                </article>
+
+                <!-- Day 4 Forecast -->
+                <article class="forecast-card" data-day="4">
+                    <header class="forecast-header">
+                        <h3 class="forecast-date">Day 4</h3>
+                    </header>
+                    <div class="forecast-content">
+                        <div class="forecast-icon-container">
+                            <img class="forecast-icon" src="" alt="Weather forecast icon" style="display: none;">
+                        </div>
+                        <div class="forecast-temps">
+                            <span class="temp-high">--°</span>
+                            <span class="temp-divider">/</span>
+                            <span class="temp-low">--°</span>
+                        </div>
+                        <p class="forecast-description">--</p>
+                    </div>
+                </article>
+
+                <!-- Day 5 Forecast -->
+                <article class="forecast-card" data-day="5">
+                    <header class="forecast-header">
+                        <h3 class="forecast-date">Day 5</h3>
+                    </header>
+                    <div class="forecast-content">
+                        <div class="forecast-icon-container">
+                            <img class="forecast-icon" src="" alt="Weather forecast icon" style="display: none;">
+                        </div>
+                        <div class="forecast-temps">
+                            <span class="temp-high">--°</span>
+                            <span class="temp-divider">/</span>
+                            <span class="temp-low">--°</span>
+                        </div>
+                        <p class="forecast-description">--</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer with Attribution and Metadata -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p class="attribution">Weather data provided by OpenWeatherMap API</p>
+            <p class="app-info">Built with semantic HTML for accessibility and SEO</p>
+            <p class="copyright">&copy; 2026 Weather Dashboard</p>
+        </div>
+    </footer>
+</body>
+</html>
