@@ -1,0 +1,19 @@
+{
+  "name": "weather-dashboard-e2e",
+  "version": "1.0.0",
+  "description": "Weather dashboard displaying current temperature, humidity, and wind data",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "weather",
+    "dashboard",
+    "temperature",
+    "humidity",
+    "wind"
+  ],
+  "author": "",
+  "license": "MIT"
+}

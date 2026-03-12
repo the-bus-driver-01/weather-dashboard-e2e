@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Weather Dashboard</h1>
+        </header>
+
+        <main class="weather-widget">
+            <div class="location-section">
+                <h2 id="city-name" class="city-name">Loading city...</h2>
+            </div>
+
+            <div class="weather-data">
+                <div class="temperature-section">
+                    <div class="temperature-value">
+                        <span id="temperature" class="temperature">--</span>
+                        <span class="temperature-unit">°C</span>
+                    </div>
+                    <div class="temperature-label">Temperature</div>
+                </div>
+
+                <div class="weather-details">
+                    <div class="weather-item">
+                        <div class="weather-icon">💧</div>
+                        <div class="weather-info">
+                            <span id="humidity" class="weather-value">--%</span>
+                            <span class="weather-label">Humidity</span>
+                        </div>
+                    </div>
+
+                    <div class="weather-item">
+                        <div class="weather-icon">💨</div>
+                        <div class="weather-info">
+                            <span id="wind-speed" class="weather-value">-- km/h</span>
+                            <span class="weather-label">Wind Speed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="refresh-btn" class="refresh-btn">Refresh Weather</button>
+            </div>
+
+            <div id="loading" class="loading-overlay" style="display: none;">
+                <div class="spinner"></div>
+                <p>Loading weather data...</p>
+            </div>
+
+            <div id="error" class="error-message" style="display: none;">
+                <p>Unable to load weather data. Please try again.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
