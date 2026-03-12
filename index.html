@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyboard Shortcuts Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Keyboard Shortcuts</h1>
+    <div class="header-actions">
+      <button id="btn-undo" class="btn" title="Undo (Ctrl+Z)" aria-label="Undo">↶ Undo</button>
+      <button id="btn-redo" class="btn" title="Redo (Ctrl+Y)" aria-label="Redo">↷ Redo</button>
+      <button id="btn-contrast" class="btn" title="Toggle High Contrast (Ctrl+Shift+H)" aria-label="Toggle high contrast">◑ Contrast</button>
+      <button id="btn-help" class="btn btn-primary" title="Help (F1)" aria-label="Show help">? Help</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Toast container for visual feedback -->
+    <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Shortcut indicator overlay -->
+    <div id="shortcut-indicator" class="shortcut-indicator" aria-hidden="true"></div>
+
+    <!-- Note pad area for undo/redo demo -->
+    <section class="card" aria-label="Notepad">
+      <h2>Notepad</h2>
+      <p class="hint">Try <kbd>Ctrl</kbd>+<kbd>Z</kbd> to undo, <kbd>Ctrl</kbd>+<kbd>Y</kbd> to redo</p>
+      <textarea id="notepad" rows="6" placeholder="Type here to test undo/redo..."></textarea>
+    </section>
+
+    <!-- Item list for shortcuts demo -->
+    <section class="card" aria-label="Items">
+      <h2>Items</h2>
+      <p class="hint">
+        <kbd>Ctrl</kbd>+<kbd>N</kbd> new item &middot;
+        <kbd>Del</kbd> delete selected &middot;
+        <kbd>Ctrl</kbd>+<kbd>A</kbd> select all
+      </p>
+      <ul id="item-list" role="listbox" aria-label="Item list" tabindex="0"></ul>
+      <div class="item-actions">
+        <input id="item-input" type="text" placeholder="New item name..." aria-label="New item name">
+        <button id="btn-add-item" class="btn btn-primary">Add</button>
+      </div>
+    </section>
+
+    <!-- Shortcut reference card -->
+    <section class="card" aria-label="Quick reference">
+      <h2>Quick Reference</h2>
+      <div class="shortcut-grid" id="shortcut-grid"></div>
+    </section>
+  </main>
+
+  <!-- Help Modal -->
+  <div id="help-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="help-title" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="help-title">Keyboard Shortcuts</h2>
+        <button id="btn-close-help" class="btn-close" aria-label="Close help">&times;</button>
+      </div>
+      <div class="modal-body" id="help-body"></div>
+      <div class="modal-footer">
+        <p>Press <kbd>Esc</kbd> or <kbd>F1</kbd> to close</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
