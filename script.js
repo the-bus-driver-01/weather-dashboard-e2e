@@ -7,11 +7,22 @@ class WeatherDashboard {
             windSpeed: document.getElementById('wind-speed'),
             refreshBtn: document.getElementById('refresh-btn'),
             loading: document.getElementById('loading'),
-            error: document.getElementById('error')
+            error: document.getElementById('error'),
+            tempUnit: document.getElementById('temp-unit'),
+            windUnit: document.getElementById('wind-unit')
         };
 
-        this.apiKey = 'demo_key'; // In a real app, this would be from environment variables
-        this.defaultCity = 'Toronto'; // Default city for demo
+        // Configuration object for API and settings
+        this.config = {
+            apiKey: process.env.WEATHER_API_KEY || 'demo_key', // Use environment variable or fallback to demo
+            defaultCity: 'Toronto'
+        };
+
+        // Unit preferences
+        this.units = {
+            temperature: 'celsius', // 'celsius' or 'fahrenheit'
+            windSpeed: 'kmh' // 'kmh' or 'mph'
+        };
 
         this.init();
     }
@@ -30,10 +41,27 @@ class WeatherDashboard {
             this.refreshWeatherData();
         });
 
+        // Add unit toggle event listeners if elements exist
+        if (this.elements.tempUnit) {
+            this.elements.tempUnit.addEventListener('click', () => {
+                this.toggleTemperatureUnit();
+            });
+        }
+
+        if (this.elements.windUnit) {
+            this.elements.windUnit.addEventListener('click', () => {
+                this.toggleWindSpeedUnit();
+            });
+        }
+
         // Auto-refresh every 10 minutes
         setInterval(() => {
             this.loadWeatherData();
         }, 600000);
+
+        // Initialize unit displays
+        this.updateTemperatureUnitDisplay();
+        this.updateWindSpeedUnitDisplay();
     }
 
     showPlaceholderStates() {
@@ -42,7 +70,7 @@ class WeatherDashboard {
 
         this.elements.temperature.textContent = '--';
         this.elements.humidity.textContent = '--%';
-        this.elements.windSpeed.textContent = '-- km/h';
+        this.elements.windSpeed.textContent = `-- ${this.getWindSpeedUnit()}`;
 
         this.elements.temperature.classList.add('placeholder');
         this.elements.humidity.classList.add('placeholder');
@@ -142,6 +170,9 @@ class WeatherDashboard {
     }
 
     updateWeatherDisplay(data) {
+        // Store current weather data for unit conversions
+        this.currentWeatherData = data;
+
         // Update city name
         this.elements.cityName.textContent = data.city;
 
@@ -154,13 +185,16 @@ class WeatherDashboard {
         // Update wind speed with proper formatting
         this.elements.windSpeed.textContent = this.formatWindSpeed(data.windSpeed);
 
-        // Update page title
-        document.title = `Weather in ${data.city} - ${this.formatTemperature(data.temperature)}°C`;
+        // Update page title with current unit
+        document.title = `Weather in ${data.city} - ${this.formatTemperature(data.temperature)}${this.getTemperatureUnit()}`;
     }
 
     formatTemperature(temp) {
-        // Format temperature with proper sign and rounding
-        const roundedTemp = Math.round(temp);
+        // Convert temperature based on current unit preference
+        const convertedTemp = this.units.temperature === 'fahrenheit' ?
+            this.celsiusToFahrenheit(temp) : temp;
+
+        const roundedTemp = Math.round(convertedTemp);
         return roundedTemp > 0 ? `+${roundedTemp}` : `${roundedTemp}`;
     }
 
@@ -170,8 +204,76 @@ class WeatherDashboard {
     }
 
     formatWindSpeed(speed) {
-        // Format wind speed with unit
-        return `${Math.round(speed)} km/h`;
+        // Convert wind speed based on current unit preference
+        const convertedSpeed = this.units.windSpeed === 'mph' ?
+            this.kmhToMph(speed) : speed;
+
+        return `${Math.round(convertedSpeed)} ${this.getWindSpeedUnit()}`;
+    }
+
+    // Unit conversion methods
+    celsiusToFahrenheit(celsius) {
+        return (celsius * 9/5) + 32;
+    }
+
+    fahrenheitToCelsius(fahrenheit) {
+        return (fahrenheit - 32) * 5/9;
+    }
+
+    kmhToMph(kmh) {
+        return kmh * 0.621371;
+    }
+
+    mphToKmh(mph) {
+        return mph / 0.621371;
+    }
+
+    // Unit getter methods
+    getTemperatureUnit() {
+        return this.units.temperature === 'fahrenheit' ? '°F' : '°C';
+    }
+
+    getWindSpeedUnit() {
+        return this.units.windSpeed === 'mph' ? 'mph' : 'km/h';
+    }
+
+    // Unit toggle methods
+    toggleTemperatureUnit() {
+        this.units.temperature = this.units.temperature === 'celsius' ? 'fahrenheit' : 'celsius';
+        this.updateTemperatureDisplay();
+        this.updateTemperatureUnitDisplay();
+    }
+
+    toggleWindSpeedUnit() {
+        this.units.windSpeed = this.units.windSpeed === 'kmh' ? 'mph' : 'kmh';
+        this.updateWindSpeedDisplay();
+        this.updateWindSpeedUnitDisplay();
+    }
+
+    // Update display methods for unit changes
+    updateTemperatureDisplay() {
+        if (this.currentWeatherData) {
+            this.elements.temperature.textContent = this.formatTemperature(this.currentWeatherData.temperature);
+            document.title = `Weather in ${this.currentWeatherData.city} - ${this.formatTemperature(this.currentWeatherData.temperature)}${this.getTemperatureUnit()}`;
+        }
+    }
+
+    updateWindSpeedDisplay() {
+        if (this.currentWeatherData) {
+            this.elements.windSpeed.textContent = this.formatWindSpeed(this.currentWeatherData.windSpeed);
+        }
+    }
+
+    updateTemperatureUnitDisplay() {
+        if (this.elements.tempUnit) {
+            this.elements.tempUnit.textContent = this.getTemperatureUnit();
+        }
+    }
+
+    updateWindSpeedUnitDisplay() {
+        if (this.elements.windUnit) {
+            this.elements.windUnit.textContent = `(${this.getWindSpeedUnit()})`;
+        }
     }
 
     // Method to get user's location (for real implementation)
@@ -208,5 +310,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Make dashboard available globally for debugging
     window.weatherDashboard = dashboard;
 
-    console.log('Weather Dashboard initialized successfully');
+    // Development mode logging (only in development)
+    if (typeof process !== 'undefined' && process.env.NODE_ENV === 'development') {
+        console.log('Weather Dashboard initialized successfully');
+    }
 });

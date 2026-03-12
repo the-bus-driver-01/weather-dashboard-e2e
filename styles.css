@@ -93,6 +93,19 @@ header h1 {
     margin-top: 10px;
 }
 
+.temperature-unit.clickable {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.temperature-unit.clickable:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
 .temperature-label {
     font-size: 1.1rem;
     font-weight: 500;
@@ -144,6 +157,20 @@ header h1 {
     font-size: 0.9rem;
     color: #636e72;
     font-weight: 500;
+}
+
+.unit-toggle {
+    cursor: pointer;
+    color: #74b9ff;
+    transition: all 0.3s ease;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.unit-toggle:hover {
+    background: rgba(116, 185, 255, 0.1);
+    color: #0984e3;
+    transform: scale(1.05);
 }
 
 .actions {
