@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fake Claude API — Chat</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="header__title">Fake Claude API</h1>
+      <div class="header__status" id="status-indicator">
+        <span class="status-dot"></span>
+        <span class="status-text">Checking…</span>
+      </div>
+    </header>
+
+    <!-- Chat area -->
+    <main class="chat" id="chat">
+      <div class="chat__welcome">
+        <p>Send a message to test your local proxy server.</p>
+        <p class="chat__hint">The server should be running on <code>localhost:4321</code></p>
+      </div>
+    </main>
+
+    <!-- Input area -->
+    <form class="input-bar" id="input-form">
+      <textarea
+        class="input-bar__textarea"
+        id="message-input"
+        placeholder="Type a message…"
+        rows="1"
+        autofocus
+      ></textarea>
+      <button class="input-bar__send" type="submit" id="send-btn" title="Send message">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
