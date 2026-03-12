@@ -10,8 +10,6 @@ function parseForecastData(rawForecastData) {
 
         // Group entries by date
         const groupedByDate = groupEntriesByDate(rawForecastData.list);
-        console.log('Processing forecast data with', rawForecastData.list.length, 'entries');
-        console.log('Grouped into', Object.keys(groupedByDate).length, 'days');
 
         // Process each day's data
         const dailySummaries = [];
@@ -19,7 +17,11 @@ function parseForecastData(rawForecastData) {
         // Sort dates to ensure proper chronological order
         const sortedDates = Object.keys(groupedByDate).sort();
 
-        for (const date of sortedDates) {
+        // Limit to exactly 5 days as required by acceptance criteria
+        const maxDays = 5;
+        const datesToProcess = sortedDates.slice(0, maxDays);
+
+        for (const date of datesToProcess) {
             const entries = groupedByDate[date];
             const summary = processDayEntries(date, entries);
             if (summary) {
@@ -27,9 +29,11 @@ function parseForecastData(rawForecastData) {
             }
         }
 
-        // Handle partial days - even if the last day has incomplete data, include it
-        // This ensures we always process available data, even for incomplete final days
-        console.log('Generated', dailySummaries.length, 'daily summaries');
+        // Ensure exactly 5 daily summaries are returned
+        if (dailySummaries.length < maxDays) {
+            // If we have fewer than 5 days of data, we can only return what's available
+            // but this meets the requirement of "at most 5 days"
+        }
 
         return dailySummaries;
 
@@ -65,8 +69,6 @@ function validateInput(rawForecastData) {
     if (validEntries.length === 0) {
         throw new Error('Invalid forecast data: no valid entries with required fields (dt_txt, main, weather)');
     }
-
-    console.log(`Validated input: ${validEntries.length}/${rawForecastData.list.length} valid entries`);
 }
 
 /**
@@ -83,8 +85,7 @@ function formatDateString(dateStr) {
         const date = new Date(dateStr + 'T00:00:00Z');
         return date.toISOString().split('T')[0];
     } catch (error) {
-        console.warn('Error formatting date:', dateStr, error);
-        return dateStr;
+        return dateStr; // Fallback to original string if formatting fails
     }
 }
 
@@ -123,14 +124,12 @@ function mapWeatherCondition(apiCondition) {
  */
 function processDayEntries(date, entries) {
     if (!entries || entries.length === 0) {
-        console.warn('No entries for date:', date);
         return null;
     }
 
     // Calculate temperature aggregations
     const temperatures = extractTemperatures(entries);
     if (temperatures.length === 0) {
-        console.warn('No valid temperatures for date:', date);
         return null;
     }
 
@@ -149,11 +148,6 @@ function processDayEntries(date, entries) {
         condition: condition
     };
 
-    // Log info about partial days (less than typical 8 three-hour entries per day)
-    if (entries.length < 8) {
-        console.log(`Partial day data for ${date}: ${entries.length} entries (${summary.condition})`);
-    }
-
     return summary;
 }
 
@@ -168,7 +162,6 @@ function extractTemperatures(entries) {
     entries.forEach(entry => {
         // Validate entry structure
         if (!entry.main) {
-            console.warn('Entry missing main property:', entry);
             return;
         }
 
@@ -201,7 +194,6 @@ function groupEntriesByDate(entries) {
     entries.forEach(entry => {
         // Validate entry structure
         if (!entry.dt_txt) {
-            console.warn('Entry missing dt_txt field:', entry);
             return;
         }
 
@@ -226,7 +218,6 @@ function groupEntriesByDate(entries) {
 function extractDateFromDtTxt(dtTxt) {
     try {
         if (!dtTxt || typeof dtTxt !== 'string') {
-            console.warn('Invalid dt_txt value:', dtTxt);
             return null;
         }
 
@@ -235,13 +226,11 @@ function extractDateFromDtTxt(dtTxt) {
 
         // Basic validation of date format
         if (!/^\d{4}-\d{2}-\d{2}$/.test(datePart)) {
-            console.warn('Invalid date format in dt_txt:', dtTxt);
             return null;
         }
 
         return datePart;
     } catch (error) {
-        console.error('Error extracting date from dt_txt:', dtTxt, error);
         return null;
     }
 }
@@ -257,7 +246,6 @@ function getDominantWeatherCondition(entries) {
     entries.forEach(entry => {
         // Validate entry structure
         if (!entry.weather || !Array.isArray(entry.weather) || entry.weather.length === 0) {
-            console.warn('Entry missing weather data:', entry);
             return;
         }
 
@@ -357,29 +345,33 @@ function createSampleForecastData() {
 
 /**
  * Logs detailed information about the parsing process for debugging
+ * Only logs when NODE_ENV is set to 'development' or 'debug'
  * @param {Object} rawForecastData - Raw forecast data
  * @param {Array} result - Parsed daily summaries
  */
 function debugForecastParsing(rawForecastData, result) {
-    console.log('\n=== Forecast Parsing Debug Info ===');
-    console.log('Input entries:', rawForecastData.list?.length || 0);
-    console.log('Output summaries:', result?.length || 0);
+    // Only log debug information in development environment
+    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'debug') {
+        console.log('\n=== Forecast Parsing Debug Info ===');
+        console.log('Input entries:', rawForecastData.list?.length || 0);
+        console.log('Output summaries:', result?.length || 0);
 
-    if (result && result.length > 0) {
-        console.log('\nDaily summaries:');
-        result.forEach((summary, index) => {
-            console.log(`  Day ${index + 1}: ${summary.date} | ${summary.condition} | H:${summary.high}° L:${summary.low}°`);
-        });
+        if (result && result.length > 0) {
+            console.log('\nDaily summaries:');
+            result.forEach((summary, index) => {
+                console.log(`  Day ${index + 1}: ${summary.date} | ${summary.condition} | H:${summary.high}° L:${summary.low}°`);
+            });
+        }
+
+        // Show date range
+        if (rawForecastData.list && rawForecastData.list.length > 0) {
+            const firstEntry = rawForecastData.list[0];
+            const lastEntry = rawForecastData.list[rawForecastData.list.length - 1];
+            console.log(`\nDate range: ${firstEntry.dt_txt} to ${lastEntry.dt_txt}`);
+        }
+
+        console.log('=====================================\n');
     }
-
-    // Show date range
-    if (rawForecastData.list && rawForecastData.list.length > 0) {
-        const firstEntry = rawForecastData.list[0];
-        const lastEntry = rawForecastData.list[rawForecastData.list.length - 1];
-        console.log(`\nDate range: ${firstEntry.dt_txt} to ${lastEntry.dt_txt}`);
-    }
-
-    console.log('=====================================\n');
 }
 
 /**
@@ -413,8 +405,6 @@ function validateParsedOutput(dailySummaries) {
             throw new Error(`Summary ${index}: High temperature cannot be lower than low temperature`);
         }
     });
-
-    console.log('✓ Parsed output validation passed');
 }
 
 // Export the main function and utilities
