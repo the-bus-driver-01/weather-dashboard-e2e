@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fake Claude API — Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <h1 class="header__title">Fake Claude API</h1>
+    <div class="header__status">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">Checking...</span>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Connection Info Panel -->
+    <section class="panel panel--info">
+      <h2>Connection</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Server URL</label>
+          <input type="text" id="serverUrl" class="info-input" value="http://localhost:4321">
+        </div>
+        <div class="info-item">
+          <label>API Key</label>
+          <code>fake-key</code>
+        </div>
+        <div class="info-item">
+          <label>Endpoint</label>
+          <code>POST /v1/messages</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- Request Builder -->
+    <section class="panel panel--request">
+      <h2>Send Request</h2>
+      <form id="requestForm" class="request-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="model">Model</label>
+            <select id="model">
+              <option value="claude-sonnet-4-20250514">claude-sonnet-4-20250514</option>
+              <option value="claude-haiku-4-5-20251001">claude-haiku-4-5-20251001</option>
+              <option value="claude-opus-4-20250514">claude-opus-4-20250514</option>
+              <option value="sonnet">sonnet</option>
+              <option value="haiku">haiku</option>
+              <option value="opus">opus</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="maxTokens">Max Tokens</label>
+            <input type="number" id="maxTokens" value="1024" min="1" max="4096">
+          </div>
+          <div class="form-group form-group--checkbox">
+            <label>
+              <input type="checkbox" id="streamToggle"> Stream
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="systemPrompt">System Prompt <span class="optional">(optional)</span></label>
+          <textarea id="systemPrompt" rows="2" placeholder="You are a helpful assistant..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="userMessage">Message</label>
+          <textarea id="userMessage" rows="3" placeholder="Hello, Claude!" required>Hello! What can you do?</textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn--primary" id="sendBtn">Send</button>
+          <button type="button" class="btn btn--secondary" id="clearBtn">Clear History</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Response Log -->
+    <section class="panel panel--log">
+      <h2>Response Log <span class="log-count" id="logCount">0</span></h2>
+      <div class="log-entries" id="logEntries">
+        <p class="log-empty" id="logEmpty">No requests sent yet. Try sending a message above.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Proxies Anthropic API requests &rarr; local <code>claude -p</code> CLI</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
