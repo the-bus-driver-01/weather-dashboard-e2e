@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fake Claude API</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="status status--offline" id="status">
+        <span class="status__dot"></span>
+        <span id="status-text">Checking...</span>
+      </div>
+      <h1 class="header__title">Fake Claude API</h1>
+      <p class="header__subtitle">
+        Local proxy that translates Anthropic Messages API requests into
+        <code>claude -p</code> CLI calls.
+      </p>
+    </header>
+
+    <!-- Quick Start -->
+    <section class="card">
+      <h2 class="card__title">Quick Start</h2>
+      <p class="card__description">Point your app at this server with these environment variables:</p>
+      <div class="config-snippet">
+        <button class="config-snippet__copy" id="copy-config">Copy</button>
+        <pre><code id="config-code">export ANTHROPIC_BASE_URL=<span id="base-url">http://localhost:4321</span>
+export ANTHROPIC_API_KEY=fake-key</code></pre>
+      </div>
+    </section>
+
+    <!-- Endpoints -->
+    <section class="card">
+      <h2 class="card__title">Endpoints</h2>
+      <div class="endpoint">
+        <span class="endpoint__method">POST</span>
+        <span class="endpoint__path">/v1/messages</span>
+        <span class="endpoint__desc"><span class="badge badge--supported">supported</span></span>
+      </div>
+      <div class="endpoint">
+        <span class="endpoint__method">POST</span>
+        <span class="endpoint__path">/v1/messages/count_tokens</span>
+        <span class="endpoint__desc"><span class="badge badge--stubbed">stubbed</span></span>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="card">
+      <h2 class="card__title">Features</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Streaming (SSE)</td><td><span class="badge badge--supported">supported</span></td></tr>
+            <tr><td>Tool use</td><td><span class="badge badge--supported">supported</span></td></tr>
+            <tr><td>Multi-turn</td><td><span class="badge badge--supported">supported</span></td></tr>
+            <tr><td>System prompt</td><td><span class="badge badge--supported">supported</span></td></tr>
+            <tr><td>Model selection</td><td><span class="badge badge--supported">supported</span></td></tr>
+            <tr><td>Token counting</td><td><span class="badge badge--stubbed">estimated</span></td></tr>
+            <tr><td>Prompt caching</td><td><span class="badge badge--unsupported">n/a</span></td></tr>
+            <tr><td>Vision / images</td><td><span class="badge badge--unsupported">n/a</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Request Log -->
+    <section class="card">
+      <h2 class="card__title">Request Log</h2>
+      <p class="card__description">Recent API requests (updates live when connected).</p>
+      <div class="log" id="log">
+        <div class="log__entry log__entry--request">Waiting for requests...</div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Fake Claude API &middot; No dependencies &middot; Node.js &ge; 18
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
