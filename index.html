@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="header">
+            <h1 class="header-title">Weather Dashboard</h1>
+            <p class="header-subtitle">Real-time weather information</p>
+        </header>
+
+        <main class="main-content">
+            <div class="weather-grid">
+                <!-- Current Weather Card -->
+                <div class="weather-card current-weather">
+                    <div class="card-header">
+                        <h2>Current Weather</h2>
+                        <span class="location">San Francisco, CA</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="temperature">
+                            <span class="temp-value">72</span>
+                            <span class="temp-unit">°F</span>
+                        </div>
+                        <div class="weather-info">
+                            <div class="weather-condition">
+                                <span class="condition-icon">☀️</span>
+                                <span class="condition-text">Sunny</span>
+                            </div>
+                            <div class="weather-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Humidity</span>
+                                    <span class="detail-value">65%</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Wind</span>
+                                    <span class="detail-value">8 mph</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5-Day Forecast Card -->
+                <div class="weather-card forecast-card">
+                    <div class="card-header">
+                        <h2>5-Day Forecast</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="forecast-list">
+                            <div class="forecast-item">
+                                <span class="forecast-day">Today</span>
+                                <span class="forecast-icon">☀️</span>
+                                <span class="forecast-temp">72°/58°</span>
+                            </div>
+                            <div class="forecast-item">
+                                <span class="forecast-day">Tomorrow</span>
+                                <span class="forecast-icon">⛅</span>
+                                <span class="forecast-temp">68°/55°</span>
+                            </div>
+                            <div class="forecast-item">
+                                <span class="forecast-day">Friday</span>
+                                <span class="forecast-icon">🌧️</span>
+                                <span class="forecast-temp">63°/52°</span>
+                            </div>
+                            <div class="forecast-item">
+                                <span class="forecast-day">Saturday</span>
+                                <span class="forecast-icon">⛈️</span>
+                                <span class="forecast-temp">59°/48°</span>
+                            </div>
+                            <div class="forecast-item">
+                                <span class="forecast-day">Sunday</span>
+                                <span class="forecast-icon">🌤️</span>
+                                <span class="forecast-temp">70°/56°</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Stats Card -->
+                <div class="weather-card stats-card">
+                    <div class="card-header">
+                        <h2>Weather Statistics</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-icon">🌡️</div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Feels Like</span>
+                                    <span class="stat-value">75°F</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">👁️</div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Visibility</span>
+                                    <span class="stat-value">10 mi</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">💨</div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Pressure</span>
+                                    <span class="stat-value">30.12 in</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">☔</div>
+                                <div class="stat-info">
+                                    <span class="stat-label">UV Index</span>
+                                    <span class="stat-value">6</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Air Quality Card -->
+                <div class="weather-card air-quality-card">
+                    <div class="card-header">
+                        <h2>Air Quality</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="air-quality-info">
+                            <div class="aqi-value">
+                                <span class="aqi-number">42</span>
+                                <span class="aqi-label">AQI</span>
+                            </div>
+                            <div class="aqi-status good">Good</div>
+                            <div class="aqi-description">
+                                Air quality is satisfactory, and air pollution poses little or no risk.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
