@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Export Tool</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>Data Export Tool</h1>
+      <p class="subtitle">Manage and export your data in multiple formats</p>
+    </header>
+
+    <main class="app-main">
+      <!-- Data Entry Section -->
+      <section class="section data-entry">
+        <h2>Data Entry</h2>
+        <form id="data-form" class="data-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="field-name">Name</label>
+              <input type="text" id="field-name" placeholder="Enter name" required>
+            </div>
+            <div class="form-group">
+              <label for="field-email">Email</label>
+              <input type="email" id="field-email" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+              <label for="field-role">Role</label>
+              <input type="text" id="field-role" placeholder="Enter role">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Entry</button>
+        </form>
+      </section>
+
+      <!-- Data Table Section -->
+      <section class="section data-table-section">
+        <div class="section-header">
+          <h2>Data Table</h2>
+          <div class="table-actions">
+            <button id="btn-clear" class="btn btn-danger" title="Clear all data">Clear All</button>
+            <button id="btn-load-sample" class="btn btn-secondary" title="Load sample data">Load Sample</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table id="data-table" class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              <!-- Rows inserted via JS -->
+            </tbody>
+          </table>
+          <p id="empty-message" class="empty-message">No data yet. Add entries above or load sample data.</p>
+        </div>
+      </section>
+
+      <!-- Export Section -->
+      <section class="section export-section">
+        <h2>Export Options</h2>
+        <div class="export-options">
+          <div class="export-card" data-format="csv">
+            <div class="export-icon">📄</div>
+            <h3>CSV</h3>
+            <p>Comma-separated values, compatible with Excel and spreadsheets</p>
+            <button class="btn btn-export" data-format="csv">Export CSV</button>
+          </div>
+          <div class="export-card" data-format="json">
+            <div class="export-icon">{ }</div>
+            <h3>JSON</h3>
+            <p>Structured data format, ideal for APIs and developers</p>
+            <button class="btn btn-export" data-format="json">Export JSON</button>
+          </div>
+          <div class="export-card" data-format="tsv">
+            <div class="export-icon">⇥</div>
+            <h3>TSV</h3>
+            <p>Tab-separated values, easy to paste into spreadsheets</p>
+            <button class="btn btn-export" data-format="tsv">Export TSV</button>
+          </div>
+          <div class="export-card" data-format="xml">
+            <div class="export-icon">&lt;/&gt;</div>
+            <h3>XML</h3>
+            <p>Extensible markup language for structured data exchange</p>
+            <button class="btn btn-export" data-format="xml">Export XML</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Export Preview Section -->
+      <section class="section preview-section" id="preview-section" hidden>
+        <div class="section-header">
+          <h2>Export Preview</h2>
+          <div class="preview-actions">
+            <button id="btn-copy" class="btn btn-secondary">Copy to Clipboard</button>
+            <button id="btn-download" class="btn btn-primary">Download File</button>
+            <button id="btn-close-preview" class="btn btn-secondary">Close</button>
+          </div>
+        </div>
+        <pre id="preview-content" class="preview-content"></pre>
+      </section>
+    </main>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast" hidden></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
